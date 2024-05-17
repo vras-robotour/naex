@@ -191,7 +191,7 @@ void compute_traversability(const sensor_msgs::PointCloud2 & input,
     {
         if (support[i][0] < min_support)
             continue;
-        cost[i][0] = (cost[i][0]*3)/max_cost;
+        cost[i][0] = cost[i][0]/max_cost;
     }
 }
 
