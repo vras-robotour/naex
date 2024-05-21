@@ -114,6 +114,7 @@ void compute_traversability(const sensor_msgs::PointCloud2 & input,
     }
 
     // Second pass: estimate normal, inclination, and clearance.
+    float max_cost = -std::numeric_limits<float>::infinity();
     for (size_t i = 0; i < position_in.rows; ++i)
     {
         if (support[i][0] < min_support)
@@ -177,16 +178,10 @@ void compute_traversability(const sensor_msgs::PointCloud2 & input,
         cost[i][0] = inclination_weight * inclination[i][0]
                 + normal_std_weight * normal_std[i][0]
                 + obstacle_weight * obstacles[i][0];
+        max_cost = std::max(max_cost, cost[i][0]);
     }
     
     // Normalize cost
-    float max_cost = -std::numeric_limits<float>::infinity();
-    for (size_t i = 0; i < position_in.rows; ++i)
-    {
-        if (support[i][0] < min_support)
-            continue;
-        max_cost = std::max(max_cost, cost[i][0]);
-    }
     for (size_t i = 0; i < position_in.rows; ++i)
     {
         if (support[i][0] < min_support)
