@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(naex)
 
 add_compile_options(-std=c++14)
-
+add_compile_options(-O2)
 find_package(Boost COMPONENTS graph REQUIRED)
 
 find_package(Eigen3 REQUIRED NO_MODULE)
